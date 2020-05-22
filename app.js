@@ -15,11 +15,21 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+//建立短網址
+let url = ''
 app.post('/', (req, res) => {
   console.log('body = ', req.body)
-  const url = req.body.url
+  url = req.body.url
+  console.log('post url = ',url)
   const random = generateShortURL()
   res.render('show', { url, random })
+})
+
+//短網址轉跳
+app.get('/:id', (req, res) => {
+  const id = req.params.id
+  console.log('get id = ',url)
+  res.redirect(`${url}`)
 })
 
 

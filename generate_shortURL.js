@@ -4,12 +4,12 @@ function sample(array) {
   return array[index]
 }
 // define generatePassword function
-function generateShortURL() {
+function generateShortURL(url) {
   // define things user might want
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
   const upperCaseLetters = lowerCaseLetters.toUpperCase()
   const numbers = '1234567890'
-  const shortURL = 5
+  const shortUrlLength = 5
   
 
   // create a collection to store things user picked up
@@ -18,19 +18,17 @@ function generateShortURL() {
   collection = collection.concat(lowerCaseLetters.split(''))
   collection = collection.concat(upperCaseLetters.split(''))
   collection = collection.concat(numbers.split(''))
-  
-  // console.log('collection', collection)
 
 
   // start generating password
-  let password = ''
-  for (let i = 0; i < shortURL; i++) {
-    password += sample(collection)
+  let shortURL = ''
+  for (let i = 0; i < shortUrlLength; i++) {
+    shortURL += sample(collection)
   }
-  // return the generated password
-  return password
-  console.log('password = ', password)
+  // return the generated shortURL
+  return shortURL
+  console.log('shortURL = ', shortURL)
 }
 
-// invoke generatePassword function
+// invoke generateshortURL function
 module.exports = generateShortURL
