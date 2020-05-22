@@ -10,12 +10,27 @@ router.get('/', (req, res) => {
 //建立短網址
 router.post('/', (req, res) => {
   url = req.body.url
-  if(url.includes('https://') || url.includes('http://')){
+  if (url.includes('https://') || url.includes('http://')) {
   } else {
     url = 'https://' + url
   }
-  const short_name = generateShortURL()
-  return Url.create({ short_name, url })
+  let short_name = 'EDYAf'
+
+  // const short_name = generateShortURL()
+
+  return Url.find({ short_name: short_name })
+    .then(check => {
+      while (check) {
+        console.log('check work!')
+        console.log('check = ', check)
+        short_name = generateShortURL()
+        console.log('short_name = ', short_name)
+        check = ''
+      }
+      return short_name
+    })
+    .then(test => console.log('test = ', test))
+    .then(() => Url.create({ short_name, url }))
     .then(() => res.render('show', { url, short_name }))
     .catch(error => console.log(error))
 })
@@ -30,7 +45,7 @@ router.get('/:id', (req, res) => {
       res.redirect(`${thisUrl}`)
     })
     .catch(error => console.log(error))
-  
+
 })
 
 module.exports = router
