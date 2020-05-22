@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const generateShortURL = require('./generate_shortURL')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -17,7 +18,8 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   console.log('body = ', req.body)
   const url = req.body.url
-  res.render('show', { url })
+  const random = generateShortURL()
+  res.render('show', { url, random })
 })
 
 
