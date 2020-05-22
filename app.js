@@ -20,6 +20,10 @@ let url = ''
 app.post('/', (req, res) => {
   console.log('body = ', req.body)
   url = req.body.url
+  if(url.includes('https://') || url.includes('http://')){
+  } else {
+    url = 'https://' + url
+  }
   console.log('post url = ',url)
   const random = generateShortURL()
   res.render('show', { url, random })
