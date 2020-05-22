@@ -8,22 +8,29 @@ router.get('/', (req, res) => {
   res.render('index')
 })
 //建立短網址
-let url = ''
 router.post('/', (req, res) => {
   url = req.body.url
   if(url.includes('https://') || url.includes('http://')){
   } else {
     url = 'https://' + url
   }
-  const random = generateShortURL()
-  res.render('show', { url, random })
+  const short_name = generateShortURL()
+  return Url.create({ short_name, url })
+    .then(() => res.render('show', { url, short_name }))
+    .catch(error => console.log(error))
 })
 
 //短網址轉跳
 router.get('/:id', (req, res) => {
   const id = req.params.id
-  console.log('get id = ',url)
-  res.redirect(`${url}`)
+  Url.find({ short_name: id })
+    .lean()
+    .then(urls => {
+      thisUrl = urls[0].url
+      res.redirect(`${thisUrl}`)
+    })
+    .catch(error => console.log(error))
+  
 })
 
 module.exports = router
