@@ -14,19 +14,20 @@ router.post('/', (req, res) => {
   } else {
     url = 'https://' + url
   }
-  let short_name = 'EDYAf'
-
-  // const short_name = generateShortURL()
-
-  return Url.find({ short_name: short_name })
+ 
+  return Url.find()
     .then(check => {
-      while (check) {
-        console.log('check work!')
-        console.log('check = ', check)
+      console.log(check)
+      let created = []
+      check.forEach(item => {
+        created.push(item.short_name)
+      })
+      console.log(created)
+      while (created.includes(short_name)) {
+        console.log('while working')
         short_name = generateShortURL()
-        console.log('short_name = ', short_name)
-        check = ''
       }
+      console.log('short = ',short_name)
       return short_name
     })
     .then(test => console.log('test = ', test))
