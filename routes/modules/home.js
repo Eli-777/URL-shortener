@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
     url = 'https://' + url
   }
   let short_name = generateShortURL()
- 
+
   return Url.find()
     .then(check => {
       // 需要防止有重覆的網址組合出現
@@ -36,11 +36,15 @@ router.post('/', (req, res) => {
 // 短網址轉跳
 router.get('/:id', (req, res) => {
   const id = req.params.id
-  Url.find({ short_name: id })
+  Url.findOne({ short_name: id })
     .lean()
     .then(urls => {
-      thisUrl = urls[0].url
-      res.redirect(`${thisUrl}`)
+      if (urls) {
+        thisUrl = urls[0].url
+        res.redirect(`${thisUrl}`)
+      } else {  //使用者輸入錯誤則轉跳錯誤頁面
+        res.render('jumpError')
+      }
     })
     .catch(error => console.log(error))
 
