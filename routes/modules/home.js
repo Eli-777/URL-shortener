@@ -46,7 +46,8 @@ router.get('/:id', (req, res) => {
     .lean()
     .then(urls => {
       if (urls) {
-        thisUrl = urls[0].url
+        thisUrl = urls.url
+        console.log('thisUrl=' ,thisUrl)
         res.redirect(`${thisUrl}`)
       } else {  //使用者輸入錯誤則轉跳錯誤頁面
         res.render('jumpError')
