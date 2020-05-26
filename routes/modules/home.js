@@ -10,10 +10,16 @@ router.get('/', (req, res) => {
 // 建立短網址
 router.post('/', (req, res) => {
   url = req.body.url
+  //沒有輸入就轉跳失敗網頁
+  if (url.length === 0) {
+    return res.render('jumpError')
+  }
+
   if (url.includes('https://') || url.includes('http://')) {
   } else {
     url = 'https://' + url
   }
+
   let short_name = generateShortURL()
 
   return Url.find()
